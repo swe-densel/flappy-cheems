@@ -2,8 +2,12 @@ import React, { useEffect, useState } from 'react';
 import './App.css';
 import Bat from './components/Bat';
 import Cheems from './components/Cheems'
-import useWindowDimensions from './components/Dimensions';
+import useWindowDimensions from './utils/dimensions';
 import Score from './components/Score';
+import Menu  from './components/Menu';
+import Retry from './components/Retry';
+import RandomAPI from './components/RandomAPI';
+import Memes from './components/Memes';
 
 export default function App() {
   const windowHeight = useWindowDimensions().height
@@ -31,12 +35,40 @@ export default function App() {
   let batLeftTimerId3
 
   const [score, setScore] = useState(0)
-  const [isGameOver, setIsGameOver] = useState(false)
+  const [isGameOver, setIsGameOver] = useState(true)
+  const [isMenuVisible, setIsMenuVisible] = useState(true)
+  const [isRetryVisible, setIsRetryVisible] = useState(false)  
 
+  const startGame = () => {
+    setIsGameOver(false)
+    setIsMenuVisible(false)
+  }
+
+  const resetGame = () => {
+    setScore(0)
+
+    setCheemsBottom(windowHeight/2)
+    setBatLeft(windowWidth)
+    setBatLeft2(windowWidth + windowWidth/3)
+    setBatLeft3(windowWidth + windowWidth*2/3)
+
+    setBatNegHeight(0)
+    setBatNegHeight2(0)
+    setBatNegHeight3(0)
+
+    setIsRetryVisible(false)
+    setIsMenuVisible(true)
+  }
+
+  const jump = () => {
+    if(!isGameOver && (cheemsBottom < windowHeight)){
+      setCheemsBottom(cheemsBottom => cheemsBottom + 50)
+    }
+  }
 
   //start falling cheems
   useEffect(() => {
-    if (cheemsBottom > 0){
+    if (cheemsBottom > 0 && !isGameOver){
       gameTimerId = setInterval(() => {
         setCheemsBottom(cheemsBottom => cheemsBottom - gravity)
       }, 30)
@@ -45,69 +77,75 @@ export default function App() {
         clearInterval(gameTimerId)
       }
     }
-  }, [cheemsBottom])
+  }, [cheemsBottom, isGameOver])
 
-  const jump = () => {
-    if(!isGameOver && (cheemsBottom < windowHeight)){
-      setCheemsBottom(cheemsBottom => cheemsBottom + 50)
-    }
-  }
-
+  //baseball bat 1 movement
   useEffect(() => {
-    if (batLeft > -batWidth) {
-      batLeftTimerId = setInterval(() => {
-        setBatLeft(batLeft => batLeft - 5 - (score * 0.1))
-      }, 20)
+    if (!isGameOver){
 
-      return () => {
-        clearInterval(batLeftTimerId)
-      }    
-
-    } else {
-      setBatLeft(windowWidth - Math.random() * 20)
-      setBatNegHeight( - Math.random() * 100)
-      setScore(score => score + 1)
+      if (batLeft > -batWidth) {
+        batLeftTimerId = setInterval(() => {
+          setBatLeft(batLeft => batLeft - 5 - (score * 0.1))
+        }, 20)
+  
+        return () => {
+          clearInterval(batLeftTimerId)
+        }    
+  
+      } else {
+        setBatLeft(windowWidth - Math.random() * 20)
+        setBatNegHeight( - Math.random() * 225)
+        setScore(score => score + 1)
+      }
     }
 
-  }, [batLeft])
+  }, [batLeft, isGameOver])
 
+  //baseball bat 2 movement
   useEffect(() => {
-    if (batLeft2 > -batWidth) {
-      batLeftTimerId2 = setInterval(() => {
-        setBatLeft2(batLeft2 => batLeft2 - 5 - (score * 0.1))
-      }, 20)
+    if (!isGameOver){
 
-      return () => {
-        clearInterval(batLeftTimerId2)
-      }    
-
-    }  else {
-      setBatLeft2(windowWidth - Math.random() * 20)
-      setBatNegHeight2( - Math.random() * 100)
-      setScore(score => score + 1)
-      
+      if (batLeft2 > -batWidth) {
+        batLeftTimerId2 = setInterval(() => {
+          setBatLeft2(batLeft2 => batLeft2 - 5 - (score * 0.1))
+        }, 20)
+  
+        return () => {
+          clearInterval(batLeftTimerId2)
+        }    
+  
+      }  else {
+        setBatLeft2(windowWidth - Math.random() * 20)
+        setBatNegHeight2( - Math.random() * 225)
+        setScore(score => score + 1)
+        
+      }
     }
 
-  }, [batLeft2])
+  }, [batLeft2, isGameOver])
 
+  //baseball bat 3 movement
   useEffect(() => {
-    if (batLeft3 > -batWidth) {
-      batLeftTimerId3 = setInterval(() => {
-        setBatLeft3(batLeft3 => batLeft3 - 5 - (score * 0.1))
-      }, 20)
+    if (!isGameOver){
 
-      return () => {
-        clearInterval(batLeftTimerId3)
-      }    
-
-    }  else {
-      setBatLeft3(windowWidth - Math.random() * 20)
-      setBatNegHeight3( - Math.random() * 100)
-      setScore(score => score + 1)
-      
+      if (batLeft3 > -batWidth) {
+        batLeftTimerId3 = setInterval(() => {
+          setBatLeft3(batLeft3 => batLeft3 - 5 - (score * 0.1))
+        }, 20)
+  
+        return () => {
+          clearInterval(batLeftTimerId3)
+        }    
+  
+      }  else {
+        setBatLeft3(windowWidth - Math.random() * 20)
+        setBatNegHeight3( - Math.random() * 225)
+        setScore(score => score + 1)
+        
+      }
     }
-
-  }, [batLeft3])
+    
+  }, [batLeft3, isGameOver])
 
   useEffect(() => {
     if (
@@ -125,7 +163,8 @@ export default function App() {
     ) {
 
       gameOver()
-    } 
+    
+    }  
     
   })
 
@@ -135,13 +174,14 @@ export default function App() {
     clearInterval(batLeftTimerId2)
     clearInterval(batLeftTimerId3)
     setIsGameOver(true)
+    setIsRetryVisible(true)
   }
-
-
 
   return (
       <div class='App' onClick={jump}>
         <header class='App-header'>
+          <RandomAPI/>
+          <Memes />
           <Cheems 
             cheemsBottom = {cheemsBottom}
             cheemsLeft = {cheemsLeft}
@@ -172,6 +212,20 @@ export default function App() {
             scoreTop = {windowHeight/50}
             scoreRight = {windowWidth/50}
           />
+
+          {isMenuVisible ? 
+            <Menu 
+              startGame = {startGame}
+            /> 
+          : null}
+
+          {isRetryVisible ? 
+            <Retry 
+              resetGame = {resetGame}
+              score = {score}
+            /> 
+          : null}
+          
         </header>
       </div>
   );

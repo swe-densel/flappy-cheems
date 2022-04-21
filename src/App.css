@@ -10,7 +10,8 @@
 .App-header {
   background-image: url('./imgs/vaporwave-bg.jpg');
   background-repeat: no-repeat;
-  background-size: auto;
+  background-size: 100% 100%;
+  background-position: center;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -19,5 +20,11 @@
   font-size: calc(10px + 2vmin);
   color: white;
 }
+
+body {
+  overflow: hidden;
+}
+
+
 
 
