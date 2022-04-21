@@ -71,7 +71,9 @@ export default function RandomAPI() {
             right: 400,
             bottom: 25,
         }}>
-            <img style={{
+            <img 
+              alt="dogs"
+              style={{
                 backgroundImage: `url(${message})`,
                 backgroundRepeat: 'no-repeat',
                 backgroundSize: '100% 100%',
@@ -94,7 +96,9 @@ export default function RandomAPI() {
             right: 300,
             top: 25,
         }}>
-            <img style={{
+            <img 
+              alt="memes"
+              style={{
                 backgroundImage: `url(${url})`,
                 backgroundRepeat: 'no-repeat',
                 backgroundSize: '100% 100%',

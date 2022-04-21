@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './App.css';
 import Bat from './components/Bat';
 import Cheems from './components/Cheems'
@@ -29,10 +29,10 @@ export default function App() {
   const [batNegHeight2, setBatNegHeight2] = useState(0)
   const [batNegHeight3, setBatNegHeight3] = useState(0)
 
-  let gameTimerId
-  let batLeftTimerId
-  let batLeftTimerId2
-  let batLeftTimerId3
+  const gameTimerId = useRef(0)
+  const batLeftTimerId = useRef(0)
+  const batLeftTimerId2 = useRef(0)
+  const batLeftTimerId3 = useRef(0)
 
   const [score, setScore] = useState(0)
   const [isGameOver, setIsGameOver] = useState(true)
@@ -69,12 +69,12 @@ export default function App() {
   //start falling cheems
   useEffect(() => {
     if (cheemsBottom > 0 && !isGameOver){
-      gameTimerId = setInterval(() => {
+      gameTimerId.current = setInterval(() => {
         setCheemsBottom(cheemsBottom => cheemsBottom - gravity)
       }, 30)
  
       return () => {
-        clearInterval(gameTimerId)
+        clearInterval(gameTimerId.current)
       }
     }
   }, [cheemsBottom, isGameOver])
@@ -84,12 +84,12 @@ export default function App() {
     if (!isGameOver){
 
       if (batLeft > -batWidth) {
-        batLeftTimerId = setInterval(() => {
+        batLeftTimerId.current = setInterval(() => {
           setBatLeft(batLeft => batLeft - 5 - (score * 0.1))
         }, 20)
   
         return () => {
-          clearInterval(batLeftTimerId)
+          clearInterval(batLeftTimerId.current)
         }    
   
       } else {
@@ -99,19 +99,19 @@ export default function App() {
       }
     }
 
-  }, [batLeft, isGameOver])
+  }, [batLeft, isGameOver, score, windowWidth])
 
   //baseball bat 2 movement
   useEffect(() => {
     if (!isGameOver){
 
       if (batLeft2 > -batWidth) {
-        batLeftTimerId2 = setInterval(() => {
+        batLeftTimerId2.current = setInterval(() => {
           setBatLeft2(batLeft2 => batLeft2 - 5 - (score * 0.1))
         }, 20)
   
         return () => {
-          clearInterval(batLeftTimerId2)
+          clearInterval(batLeftTimerId2.current)
         }    
   
       }  else {
@@ -122,19 +122,19 @@ export default function App() {
       }
     }
 
-  }, [batLeft2, isGameOver])
+  }, [batLeft2, isGameOver, score, windowWidth])
 
   //baseball bat 3 movement
   useEffect(() => {
     if (!isGameOver){
 
       if (batLeft3 > -batWidth) {
-        batLeftTimerId3 = setInterval(() => {
+        batLeftTimerId3.current = setInterval(() => {
           setBatLeft3(batLeft3 => batLeft3 - 5 - (score * 0.1))
         }, 20)
   
         return () => {
-          clearInterval(batLeftTimerId3)
+          clearInterval(batLeftTimerId3.current)
         }    
   
       }  else {
@@ -145,7 +145,7 @@ export default function App() {
       }
     }
     
-  }, [batLeft3, isGameOver])
+  }, [batLeft3, isGameOver, score, windowWidth])
 
   useEffect(() => {
     if (
@@ -169,10 +169,10 @@ export default function App() {
   })
 
   const gameOver = () => {
-    clearInterval(gameTimerId)
-    clearInterval(batLeftTimerId)
-    clearInterval(batLeftTimerId2)
-    clearInterval(batLeftTimerId3)
+    clearInterval(gameTimerId.current)
+    clearInterval(batLeftTimerId.current)
+    clearInterval(batLeftTimerId2.current)
+    clearInterval(batLeftTimerId3.current)
     setIsGameOver(true)
     setIsRetryVisible(true)
   }

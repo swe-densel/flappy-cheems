@@ -16,15 +16,17 @@ export default function Memes() {
               bottom: 50,
               left: 50,
           }}>
-              <img style={{
-                backgroundImage: `url('https://c.tenor.com/hnbGxf0Zhu8AAAAd/mnananaicls-dance.gif')`,
-                backgroundRepeat: 'no-repeat',
-                backgroundSize: '100% 100%',
-                position: 'relative',
-                width: 225,
-                height: 225,
-                top: 10,
-              }} />
+              <img 
+                alt="dancing"
+                style={{
+                    backgroundImage: `url('https://c.tenor.com/hnbGxf0Zhu8AAAAd/mnananaicls-dance.gif')`,
+                    backgroundRepeat: 'no-repeat',
+                    backgroundSize: '100% 100%',
+                    position: 'relative',
+                    width: 225,
+                    height: 225,
+                    top: 10,
+                }} />
           </div>
 
           <div style={{
@@ -39,15 +41,17 @@ export default function Memes() {
               top: 50,
               left: 500,
           }}>
-              <img style={{
-                 backgroundImage: `url('https://c.tenor.com/_4YgA77ExHEAAAAC/rick-roll.gif')`,
-                 backgroundRepeat: 'no-repeat',
-                 backgroundSize: '100% 100%',
-                 position: 'relative',
-                 width: 225,
-                 height: 225,
-                 top: 10,
-              }} />
+              <img 
+                alt="rick-roll"
+                style={{
+                    backgroundImage: `url('https://c.tenor.com/_4YgA77ExHEAAAAC/rick-roll.gif')`,
+                    backgroundRepeat: 'no-repeat',
+                    backgroundSize: '100% 100%',
+                    position: 'relative',
+                    width: 225,
+                    height: 225,
+                    top: 10,
+                }} />
           </div>
         </>
     )
