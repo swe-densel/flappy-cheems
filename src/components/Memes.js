@@ -17,7 +17,7 @@ export default function Memes() {
               left: 50,
           }}>
               <img 
-                alt="dancing"
+                alt=""
                 style={{
                     backgroundImage: `url('https://c.tenor.com/hnbGxf0Zhu8AAAAd/mnananaicls-dance.gif')`,
                     backgroundRepeat: 'no-repeat',
@@ -42,7 +42,7 @@ export default function Memes() {
               left: 500,
           }}>
               <img 
-                alt="rick-roll"
+                alt=""
                 style={{
                     backgroundImage: `url('https://c.tenor.com/_4YgA77ExHEAAAAC/rick-roll.gif')`,
                     backgroundRepeat: 'no-repeat',
