@@ -7,7 +7,7 @@ export default function Score({count, scoreTop, scoreRight}) {
 
     useEffect(() => {
         const scoreRef = query(ref(database, 'scores'), orderByChild('score'))
-        const top5Ref = query(scoreRef, limitToLast(5))
+        const top5Ref = query(scoreRef, limitToLast(10))
 
         onValue(top5Ref, (snapshot) => {
             const players = snapshot.val()
