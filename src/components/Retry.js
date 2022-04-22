@@ -15,6 +15,7 @@ export default function Retry({resetGame, score}) {
       };
 
     const saveScore = () => {
+        if(name === "") return
         set(ref(database, 'scores/' + name), {
             name: name,
             score: score
